@@ -154,7 +154,11 @@ class TextLine extends StatelessWidget {
           res = res.merge(defaultStyles.sizeHuge);
           break;
         default:
-          double? fontSize = double.tryParse(size.value);
+          var value = size.value as  String;
+          if(size.value.contains("px")){
+            value = size.value.replaceAll("px","");
+          }
+          double? fontSize = double.tryParse(value);
           if (fontSize != null) {
             res = res.merge(TextStyle(fontSize: fontSize));
           } else {
