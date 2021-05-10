@@ -100,13 +100,20 @@ String _standardizeImageUrl(String url) {
   return url;
 }
 
+bool _isBase64(String url) {
+  if (url.contains("base64")) {
+    return true;
+  }
+  return false;
+}
+
 Widget _defaultEmbedBuilder(BuildContext context, leaf.Embed node) {
   switch (node.value.type) {
     case 'image':
       String imageUrl = _standardizeImageUrl(node.value.data);
       return imageUrl.startsWith('http')
           ? Image.network(imageUrl)
-          : isBase64(imageUrl)
+          : _isBase64(node.value.data)
               ? Image.memory(base64.decode(imageUrl))
               : Image.file(io.File(imageUrl));
     default:
@@ -427,7 +434,7 @@ class _QuillEditorSelectionGestureDetectorBuilder
             builder: (context) => ImageTapWrapper(
               imageProvider: imageUrl.startsWith('http')
                   ? NetworkImage(imageUrl)
-                  : isBase64(imageUrl)
+                  : _isBase64(blockEmbed.data)
                       ? Image.memory(base64.decode(imageUrl))
                           as ImageProvider<Object>?
                       : FileImage(io.File(imageUrl)),
