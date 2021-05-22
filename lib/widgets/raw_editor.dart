@@ -1019,12 +1019,12 @@ class RawEditorState extends EditorState
     return widget.controller.plainTextEditingValue;
   }
 
-  @override
-  void hideToolbar() {
-    if (getSelectionOverlay()?.toolbar != null) {
-      getSelectionOverlay()?.hideToolbar();
-    }
-  }
+//  @override
+//  void hideToolbar() {
+//    if (getSelectionOverlay()?.toolbar != null) {
+//      getSelectionOverlay()?.hideToolbar();
+//    }
+//  }
 
   @override
   bool get cutEnabled => widget.toolbarOptions.cut && !widget.readOnly;
@@ -1121,6 +1121,18 @@ class RawEditorState extends EditorState
       openConnectionIfNeeded();
     } else if (!widget.focusNode.hasFocus) {
       closeConnectionIfNeeded();
+    }
+  }
+
+  @override
+  void userUpdateTextEditingValue(TextEditingValue value, SelectionChangedCause cause) {
+    // TODO: implement userUpdateTextEditingValue
+  }
+
+  @override
+  void hideToolbar([bool hideHandles = true]) {
+    if (getSelectionOverlay()?.toolbar != null) {
+      getSelectionOverlay()?.hideToolbar();
     }
   }
 }
